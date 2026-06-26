@@ -1,0 +1,51 @@
+# 设备配置文件
+devices:
+  - name: iStoreOS
+    host: 10.0.0.1
+    type: router
+    role: 主路由
+    services: [wireguard, frps, adguard]
+    ssh:
+      enabled: false  # SSH 端口关闭
+    web:
+      url: http://10.0.0.1:80
+
+  - name: OpenWrt
+    host: 192.168.1.35
+    type: router
+    role: 旁路由
+    services: [frpc, wireguard]
+    ssh:
+      enabled: true
+      port: 22
+      user: root
+
+  - name: FeiNiuNAS
+    host: 192.168.1.33
+    type: nas
+    role: 存储/Docker
+    services: [smb, docker]
+    ssh:
+      enabled: true
+      port: 22
+      user: yingjianchao
+
+  - name: HuaweiUOS
+    host: 192.168.1.47
+    type: server
+    role: 网盘
+    services: [filebrowser]
+    ssh:
+      enabled: true
+      port: 22
+      user: huawei
+    web:
+      url: http://192.168.1.47:8080
+
+  - name: RuijieRouter
+    host: 192.168.1.254
+    type: router
+    role: WiFi路由
+    web:
+      url: http://192.168.1.254
+      api: /cgi-bin/luci/api/auth
